@@ -37,7 +37,7 @@ Pour lancer le dashboard sur votre machine, suivez ces étapes :
 
 ## Data
 Le dashboard repose sur deux jeux de données principaux issus de sources Open Data :
-![[mermaid_diag.png]]
+[[mermaid_diag.png]]
 1 - **Air Quality Data** : Contient les valeurs AQI (Air Quality Index). Les variables incluent les niveaux de (CO, NO2, Ozone etc).
  - Source : https://www.kaggle.com/datasets/hasibalmuzdadid/global-air-pollution-dataset
 
