@@ -1,6 +1,7 @@
 # EcoPulse
 
-<video controls src="https://raw.githubusercontent.com/IssamRamzi/EcoPulse/main/vidéo.mp4" title="Vidéo"></video>
+**Demo video**  
+https://github.com/IssamRamzi/EcoPulse/raw/main/vidéo.mp4
 
 
 EcoPulse est un dashboard interactif conçu avec **Dash** et **Plotly**. Il permet d'analyser la corrélation entre la production d'électricité mondiale et la qualité de l'air.
