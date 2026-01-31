@@ -48,14 +48,16 @@ def create_page_header():
 
 def pollution_callbacks(df):
     @callback(
-    Output('pollution_dropdown_city', 'options'),
-    Output('pollution_dropdown_city', 'value'),
-    Input('pollution_dropdown_country', 'value')
+        Output('pollution_dropdown_city', 'options'),
+        Output('pollution_dropdown_city', 'value'),
+        Input('pollution_dropdown_country', 'value')
     )
     def update_city_dropdown(selected_country):
         if not selected_country:
             return [], None
-        cities = sorted(df[df["Country"] == selected_country]["City"].unique())
+            
+        cities = sorted(df[df["Country"] == selected_country]["City"].dropna().unique())
+        
         options = [{"label": c, "value": c} for c in cities]
         value = cities[0] if cities else None
         return options, value
@@ -76,7 +78,7 @@ def pollution_callbacks(df):
         aqi_category = city_row["AQI Category"]
         color = "success" if overall_aqi <= 50 else "warning" if overall_aqi <= 100 else "danger"
         
-        # Find dominant pollutant
+        
         pollutant_values = {POLLUTANTS_MAP[k]: city_row[k] for k in POLLUTANTS_MAP.keys()}
         dominant = max(pollutant_values, key=pollutant_values.get)
         
@@ -202,7 +204,7 @@ def pollution_callbacks(df):
             locations="Country",
             locationmode="country names",
             color="AQI Value",
-            color_continuous_scale="RdYlGn_r",  
+            color_continuous_scale="Temps",
             projection="orthographic",
             title="Average Air Quality Index by Country",
             labels={"AQI Value": "Average AQI"},
@@ -240,4 +242,51 @@ def pollution_callbacks(df):
         )
 
         return fig
-
+    @callback(
+        Output('top_countries_bar_chart', 'figure'),
+        Input('pollution_dropdown_country', 'options') 
+    )
+    def update_top_countries_chart(_):
+        avg_aqi = df.groupby("Country")["AQI Value"].mean().reset_index()
+        
+        top_10 = avg_aqi.sort_values(by="AQI Value", ascending=False).head(10)
+        
+        fig = px.bar(
+            top_10,
+            x="AQI Value",
+            y="Country",
+            orientation='h', 
+            text="AQI Value",
+            color="AQI Value",
+            color_continuous_scale="Reds", 
+            title="Niveau moyen de pollution par pays"
+        )
+        
+        fig.update_layout(yaxis=dict(autorange="reversed"))
+        
+        fig.update_traces(texttemplate='%{text:.0f}', textposition='outside')
+        fig.update_layout(
+            template="plotly_dark", 
+            font=dict(color="black"),
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            xaxis_title="AQI Moyen",
+            yaxis_title=None,
+            coloraxis_showscale=False, 
+            margin=dict(l=0, r=50, t=30, b=0)
+        )
+        
+        return fig
+    
+    @callback(
+        Output('pollution_dropdown_country', 'value'),
+        Input('pollution_map', 'clickData'),
+        prevent_initial_call=True
+    )
+    def update_country_from_map(clickData):
+        if clickData is None:
+            print("No data")
+        
+        selected_country = clickData['points'][0]['location']
+        
+        return selected_country

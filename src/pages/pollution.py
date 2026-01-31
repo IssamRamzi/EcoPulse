@@ -60,7 +60,6 @@ charts_section = html.Div([
             )
         ], width=12)
     ]),
-    
     dbc.Row([
         dbc.Col([
             create_chart_card(
@@ -69,7 +68,13 @@ charts_section = html.Div([
                 "Average AQI by country - Interactive globe view"
             )
         ], width=12)
-    ])
+    ]),
+    dbc.Card([
+        dbc.CardBody([
+            html.H5("Top 10 des Pays les Plus Pollués (Moyenne AQI)", className="card-title fw-bold mb-4"),
+            dcc.Graph(id='top_countries_bar_chart', config={'displayModeBar': False})
+        ])
+    ], className="shadow-sm border-0 mb-4"),
 ])
 
 # Main layout

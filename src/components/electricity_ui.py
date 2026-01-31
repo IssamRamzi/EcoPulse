@@ -128,14 +128,20 @@ def elec_callbacks(df):
         ]
         
         types_to_exclude = ["Electricity", "Total Renewables (Hydro, Geo, Solar, Wind, Other)"]
-        filtered_df_hist = filtered_df[~filtered_df["Type"].isin(types_to_exclude)]
+        filtered_df_hist = filtered_df[~filtered_df["Type"].isin(types_to_exclude)].copy()
         
-        
-        filtered_df_hist = filtered_df_hist.copy()
+        # Guard clause: Check if data is empty to prevent other errors
+        if filtered_df_hist.empty:
+            fig = px.bar(title="No Data Available")
+            fig.update_layout(template="plotly_dark")
+            return fig
+
         filtered_df_hist['Category'] = filtered_df_hist['Type'].apply(
             lambda x: 'Renewable' if x in RENEWABLES else 'Non-Renewable'
         )
         
+        # --- FIX IS HERE ---
+        # 1. Remove template="plotly_dark" from px.bar
         fig = px.bar(
             filtered_df_hist, 
             x="Type",
@@ -143,12 +149,13 @@ def elec_callbacks(df):
             color="Category",
             color_discrete_map={"Renewable": "#10b981", "Non-Renewable": "#f59e0b"},
             title=f"Energy Mix in {selected_country} ({selected_year})",
-            labels={"Value": "Production (GWh)", "Type": "Energy Source"},
-            template="plotly_dark"
+            labels={"Value": "Production (GWh)", "Type": "Energy Source"}
         )
         
+        # 2. Apply the template here instead
         fig.update_layout(
-            font = dict(color="black"),
+            template="plotly_dark", 
+            font=dict(color="black"), # Note: plotly_dark might conflict with black font, consider changing to white/gray
             xaxis_tickangle=-45,
             showlegend=True,
             hovermode='x unified',
@@ -157,7 +164,6 @@ def elec_callbacks(df):
         )
         
         return fig
-
 
     @callback(
         Output('electricity_map', 'figure'),
@@ -181,7 +187,7 @@ def elec_callbacks(df):
             locations="Country",
             locationmode="country names",
             color="Value",
-            color_continuous_scale="Viridis",
+            color_continuous_scale="Temps",
             projection="orthographic",  # Changed to orthographic for 3D globe
             title=f"Global Electricity Production ({selected_year})",
             labels={"Value": "Production (GWh)"}
