@@ -4,7 +4,9 @@ EcoPulse est un dashboard interactif conçu avec **Dash** et **Plotly**. Il perm
 
 ## User Guide
 **Déploiement local**
+
 Pour lancer le dashboard sur votre machine, suivez ces étapes :
+
 1 - **Cloner le dépôt :**
 ```bash
     git clone https://github.com/IssamRamzi/EcoPulse
