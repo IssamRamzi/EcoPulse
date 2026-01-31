@@ -19,7 +19,7 @@ countries = sorted(df["Country"].dropna().unique().tolist())
 random_country = random.choice(countries)
 
 
-print(random_country)
+# print(random_country)
 
 
 # header

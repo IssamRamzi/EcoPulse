@@ -175,7 +175,7 @@ def elec_callbacks(df):
             (df["Type"] == "Electricity")
         ].groupby("Country")["Value"].sum().reset_index()
         
-        print(f'{filtered_df["Value"].min()} , {filtered_df["Value"].max()}')
+        # print(f'{filtered_df["Value"].min()} , {filtered_df["Value"].max()}')
         
         fig = px.choropleth(
             filtered_df,

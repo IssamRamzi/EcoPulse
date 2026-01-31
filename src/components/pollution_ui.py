@@ -285,7 +285,8 @@ def pollution_callbacks(df):
     )
     def update_country_from_map(clickData):
         if clickData is None:
-            print("No data")
+            # print("No data")
+            pass
         
         selected_country = clickData['points'][0]['location']
         
