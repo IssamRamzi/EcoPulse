@@ -46,10 +46,8 @@ filters_section = dbc.Card([
     ])
 ], className="shadow-sm border-0 mb-4")
 
-# Metrics row
 metrics_row = dbc.Row(id='pollution_metrics', className="mb-4")
 
-# Charts section
 charts_section = html.Div([
     dbc.Row([
         dbc.Col([
@@ -77,7 +75,6 @@ charts_section = html.Div([
     ], className="shadow-sm border-0 mb-4"),
 ])
 
-# Main layout
 layout = dbc.Container(fluid=True, children=[
     page_header,
     filters_section,

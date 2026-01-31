@@ -130,7 +130,6 @@ def elec_callbacks(df):
         types_to_exclude = ["Electricity", "Total Renewables (Hydro, Geo, Solar, Wind, Other)"]
         filtered_df_hist = filtered_df[~filtered_df["Type"].isin(types_to_exclude)].copy()
         
-        # Guard clause: Check if data is empty to prevent other errors
         if filtered_df_hist.empty:
             fig = px.bar(title="No Data Available")
             fig.update_layout(template="plotly_dark")
@@ -140,8 +139,6 @@ def elec_callbacks(df):
             lambda x: 'Renewable' if x in RENEWABLES else 'Non-Renewable'
         )
         
-        # --- FIX IS HERE ---
-        # 1. Remove template="plotly_dark" from px.bar
         fig = px.bar(
             filtered_df_hist, 
             x="Type",
@@ -152,10 +149,9 @@ def elec_callbacks(df):
             labels={"Value": "Production (GWh)", "Type": "Energy Source"}
         )
         
-        # 2. Apply the template here instead
         fig.update_layout(
             template="plotly_dark", 
-            font=dict(color="black"), # Note: plotly_dark might conflict with black font, consider changing to white/gray
+            font=dict(color="black"), 
             xaxis_tickangle=-45,
             showlegend=True,
             hovermode='x unified',
@@ -188,7 +184,7 @@ def elec_callbacks(df):
             locationmode="country names",
             color="Value",
             color_continuous_scale="Temps",
-            projection="orthographic",  # Changed to orthographic for 3D globe
+            projection="orthographic",  
             title=f"Global Electricity Production ({selected_year})",
             labels={"Value": "Production (GWh)"}
         )
@@ -244,7 +240,6 @@ def elec_callbacks(df):
             (df["Parameter"] == "Net Electricity Production")
         ]
 
-        # Total electricity per year
         total_df = (
             country_df[country_df["Type"] == "Electricity"]
             .groupby("Year")["Value"]
@@ -252,7 +247,6 @@ def elec_callbacks(df):
             .reset_index(name="Total")
         )
 
-        # Renewable electricity per year
         renewable_df = (
             country_df[country_df["Type"].isin(RENEWABLES)]
             .groupby("Year")["Value"]
@@ -260,16 +254,13 @@ def elec_callbacks(df):
             .reset_index(name="Renewable")
         )
 
-        # Merge and calculate shares
         merged_df = total_df.merge(renewable_df, on="Year", how="left")
         merged_df["Renewable"] = merged_df["Renewable"].fillna(0)
         merged_df["Non-Renewable"] = merged_df["Total"] - merged_df["Renewable"]
         
-        # Calculate percentages
         merged_df["RenewableShare"] = (merged_df["Renewable"] / merged_df["Total"] * 100)
         merged_df["NonRenewableShare"] = (merged_df["Non-Renewable"] / merged_df["Total"] * 100)
 
-        # Create stacked bar chart
         fig = px.bar(
             merged_df,
             x="Year",

@@ -63,7 +63,6 @@ charts_section = html.Div([
 
 ])
 
-# Main layout
 layout = dbc.Container(fluid=True, children=[
     page_header,
     filters_section,

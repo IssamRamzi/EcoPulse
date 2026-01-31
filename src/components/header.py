@@ -23,13 +23,13 @@ def create_header():
     header = bsp.Navbar(
         bsp.Container(
             [
-                # Left side
+                # Left
                 html.A(
                     bsp.Row(
                         [
                             bsp.Col(
                                 bsp.NavbarBrand(
-                                    "Air Pollution Dashboard",
+                                    "EcoPulse",
                                     className="fw-semibold"
                                 )
                             )
@@ -41,7 +41,7 @@ def create_header():
                     style={"textDecoration": "none"},
                 ),
 
-                # Right side - nav links
+                # Right
                 bsp.Collapse(
                     bsp.Nav(
                         nav_links, 
