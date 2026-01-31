@@ -10,46 +10,55 @@ def create_header():
         if page['path'] and page['name']:
             nav_links.append(
                 bsp.NavLink(
-                    page['name'], 
+                    page['name'],
                     href=page['path'], 
-                    active="exact", # met le label page en brillance si celle ci est activé
-                    className="mx-2" 
+                    active="exact",
+                    className="mx-2 px-3 py-2 rounded-pill",
+                    style={
+                        "transition": "all 0.2s ease",
+                    }
                 )
             )
 
-    
     header = bsp.Navbar(
         bsp.Container(
             [
-                # partie gauche de la navbar
+                # Left side
                 html.A(
-                    
                     bsp.Row(
                         [
-                            bsp.Col(bsp.NavbarBrand("Pollution Data Analysis", className="ms-2")),
+                            bsp.Col(
+                                bsp.NavbarBrand(
+                                    "Air Pollution Dashboard",
+                                    className="fw-semibold"
+                                )
+                            )
                         ],
                         align="center",
-                        className="g-0", 
+                        className="g-0",
                     ),
                     href="/",
                     style={"textDecoration": "none"},
                 ),
-                
-                # partie droite de la navbar
-                bsp.Nav(
-                    nav_links, 
-                    navbar=True, 
-                    className="ms-auto" 
+
+                # Right side - nav links
+                bsp.Collapse(
+                    bsp.Nav(
+                        nav_links, 
+                        navbar=True, 
+                        className="ms-auto"
+                    ),
+                    id="navbar-collapse",
+                    navbar=True,
                 ),
             ],
-            fluid=True 
+            fluid=True
         ),
-
-        # params de la navbar
         color="dark",
-        dark=True, 
-        className="mb-4 shadow-sm", 
-        sticky="top" 
+        dark=True,
+        className="mb-4 shadow-sm",
+        sticky="top",
+        style={"borderBottom": "2px solid #6c757d"}
     )
     
     return header

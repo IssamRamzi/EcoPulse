@@ -4,8 +4,6 @@ import os
 import time 
 
 
-
-
 def clean_electricity_dataset():
     df = pd.read_csv(os.path.join(DATA_RAW_DIR,"global_electricity_production_data.csv"))
     df = df.rename(columns={"country_name": 'Country', 'date': "Date", "parameter": "Parameter", 'product' : "Type", 'value': 'Value', 'unit' : 'Unit'})
@@ -33,7 +31,6 @@ def clean_pollution_dataset():
     df.to_csv(os.path.join(DATA_CLEANED_DIR, "air_pollution.csv"), index=False)
 
 
-# TODO : Add clean climate_change_dataset
 
 
 def replace_countries_names(df : pd.DataFrame):
