@@ -1,5 +1,7 @@
 # EcoPulse
 
+<video src="vidéo.mp4" >
+
 EcoPulse est un dashboard interactif conçu avec **Dash** et **Plotly**. Il permet d'analyser la corrélation entre la production d'électricité mondiale et la qualité de l'air.
 
 ## User Guide
@@ -37,7 +39,6 @@ Pour lancer le dashboard sur votre machine, suivez ces étapes :
 
 ## Data
 Le dashboard repose sur deux jeux de données principaux issus de sources Open Data :
-[[mermaid_diag.png]]
 1 - **Air Quality Data** : Contient les valeurs AQI (Air Quality Index). Les variables incluent les niveaux de (CO, NO2, Ozone etc).
  - Source : https://www.kaggle.com/datasets/hasibalmuzdadid/global-air-pollution-dataset
 
@@ -46,6 +47,9 @@ Le dashboard repose sur deux jeux de données principaux issus de sources Open D
 
 ## Developer Guide
 L'application suit une structure modulaire pour faciliter l'ajout de nouvelles fonctionnalités.
+
+<img src="mermaid_diag.png" />
+
 
 **Ajouter une page ou un graphique**
 1. **Graphique**: Créez une fonction de génération de figure dans le dossier src/components (ex: src/components/pollution_ui.py)
