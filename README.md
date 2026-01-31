@@ -1,6 +1,6 @@
 # EcoPulse
 
-<video src="vidéo.mp4" >
+<video src="vidéo.mp4" />
 
 EcoPulse est un dashboard interactif conçu avec **Dash** et **Plotly**. Il permet d'analyser la corrélation entre la production d'électricité mondiale et la qualité de l'air.
 
