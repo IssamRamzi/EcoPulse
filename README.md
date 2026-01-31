@@ -1,5 +1,4 @@
 # EcoPulse
-
 **Demo video**  
 https://github.com/IssamRamzi/EcoPulse/raw/main/vidéo.mp4
 
@@ -31,12 +30,17 @@ Pour lancer le dashboard sur votre machine, suivez ces étapes :
     python -m pip install -r requirements.txt
 ```
 
-4 - **Lancer l'application :**
+4 - **Nettoyer les Données :**
+```bash
+    python src/utils/clean_data.py
+```
+
+5 - **Lancer l'application :**
 ```bash
     python main.py
 ```
 
-5 - **Accés au dashboard :** 
+6 - **Accés au dashboard :** 
     Ouvrez votre navigateur et allez a l'adresse : http://127.0.0.1:8050/
 
 ## Data
